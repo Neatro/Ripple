@@ -1,7 +1,10 @@
 # Ripple
-A simple ripple simulation
+A simple ripple simulation.
 
-The simulation is lightweight, but not physically accurate
+The simulation is lightweight, but not physically accurate.
+
+StarfallEx is required to run this script.
+https://github.com/thegrb93/StarfallEx
 
 Licensed under Attribution-NonCommercial 3.0 Unported (CC BY-NC 3.0)
 
