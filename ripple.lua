@@ -42,8 +42,8 @@ if CLIENT then
     iterations = 4 --physics iteration
     fps = 40 --target FPS of mesh
     
-    local width = 512 / count
     local count = ( maxs - mins + 1 )
+    local width = 512 / count
 
     for a = mins, maxs do 
         li[ a ] = {}
