@@ -50,9 +50,9 @@ if CLIENT then
         liv[ a ] = {}
         livector[ a ] = {}
         for b = mins, maxs do
-        li[ a ][ b ] = 0
-        liv[ a ][ b ] = 0
-        livector[ a ][ b ] = Vector()
+            li[ a ][ b ] = 0
+            liv[ a ][ b ] = 0
+            livector[ a ][ b ] = Vector()
         end
     end 
     
@@ -63,9 +63,8 @@ if CLIENT then
         t[ math.clamp( x, mins, maxs ) ][ math.clamp( y, mins, maxs ) ] = v
     end
     
-    mat = material.load( "debug/env_cubemap_model" )
-    
-    
+    mat = material.load( "hunter/myplastic" )
+
     nextFrame = math.ceil( timer.curtime() * fps ) / fps
     
     function advanceFrame()
@@ -93,6 +92,7 @@ if CLIENT then
         local curx, cury = render.cursorPos()
         render.setBackgroundColor( Color( 0, 0, 0, 0 ) )
         
+        --user interaction
         if curx and player():keyDown( 32 ) then
             sset( liv, math.ceil( curx / width ), math.ceil( cury / width ), -256 )
             sset( liv, math.ceil( curx / width+1 ), math.ceil( cury / width ), -256 )
@@ -101,6 +101,7 @@ if CLIENT then
         end
         
         if timer.curtime() > nextFrame then
+            --physics part
             for i = 1, iterations do
                 local avg = 0
                 
@@ -154,9 +155,6 @@ if CLIENT then
                          
                 local chp = chip():getPos()
                 
-                render.setColor( Color( 255, 255, 255 ) )
-                render.setMaterial( mat ) 
-                
                 mesh.generate( Me, 7, count * count, function() 
                     for i = mins, maxs do for j = mins, maxs do
                         local height1 = sget( li, i, j ) + 32
@@ -205,25 +203,21 @@ if CLIENT then
                     end end
                 end )
             end )
-            
         end
         
+        --render the mesh
         render.enableDepth( true )
-        
         if Me then
+            render.setColor( Color( 255, 255, 255 ) )
             render.setMaterial( mat ) 
-            render.setColor( Color( 255, 255, 255, 255 ) )
             Me:draw()
         end
-        
-        
     end )
-    
 end
 
 if SERVER then
     local pcb = prop.createComponent( chip():getPos() + Vector( 0, 0, 32 ), Angle( 0, 0, 0 ), "starfall_screen", "models/hunter/plates/plate4x4.mdl", true )
     pcb:linkComponent( chip() )
     pcb:setColor( Color( 0, 0, 0, 1 ) )
-
+    pcb:setMaterial( "models/crane_docks/crane_base" )
 end
